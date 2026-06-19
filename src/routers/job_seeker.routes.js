@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { upload_resume, find_recruiter } from "../controllers/job_seeker.controller.js";
+import { isJobSeeker, verifyJWT } from "../middlewares/auth.middleware.js";
+import multer from "multer";
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage: storage });
+const router = Router();
+router.route("/upload").post(verifyJWT,isJobSeeker,upload.single("image"), upload_resume);
+router.route("/find_recruiter").get(verifyJWT,isJobSeeker, find_recruiter);
+export default router;
